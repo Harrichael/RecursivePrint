@@ -55,11 +55,31 @@ def node_print(text, level):
   print('\t'*level + str(text))
 
 @RecursivePrint
-def fibonacci(n):  
+def fibo_pairs(n):
+    if n == 0:
+        return (0, 1)
+    elif n > 0:
+        prev_1, prev_2 = fibo_pairs(n-1)
+        return prev_1 + prev_2, prev_1
+    else:
+        prev_1, prev_2 = fibo_pairs(n+1)
+        if prev_2 > 0:
+            return (abs(prev_1) + abs(prev_2)), prev_1
+        else:
+            return -(abs(prev_1) + abs(prev_2)), prev_1
+            
+
+
+def fibonacci_1(n):  
+    return fibo_pairs(n)[0]
+
+@RecursivePrint
+def fibonacci_2(n):  
     if n <= 2: 
         return 1
     else:
-        return fibonacci(n-1) + fibonacci(n-2)
+        return fibonacci_2(n-1) + fibonacci_2(n-2)
 
 if __name__ == '__main__':
-  fibonacci(9)
+  fibonacci_2(9)
+  fibonacci_1(-9)
